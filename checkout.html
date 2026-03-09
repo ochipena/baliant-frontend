@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BALIANT - Finalizar Compra</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+
+<body class="checkout-body">
+
+    <header class="checkout-header">
+        <div style="display: flex; justify-content: center !important; align-items: center; padding: 1px; width: 100%;">
+            <div class="logo-containerCheck" onclick="window.location.href='index.html'">
+                <img src="Baliant.jpg" alt="BALIANT" class="logo-img">
+            </div>
+        </div>
+    </header>
+
+    <main class="checkout-container">
+        <section class="checkout-form-section">
+            <h3>Tus Datos de Envío</h3>
+            <form id="formulario-envio">
+                <div class="input-group">
+                    <label>Nombre Completo</label>
+                    <input type="text" id="cliente-nombre" required placeholder="Ej: Juan Pérez">
+                </div>
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" id="cliente-email" required placeholder="tu@email.com">
+                </div>
+                <div class="input-group">
+                    <label>Teléfono / WhatsApp</label>
+                    <input type="tel" id="input-telefono" placeholder="Ej: 11 2345 6789">
+                </div>
+                <div class="input-group">
+                    <label>Provincia</label>
+                    <select id="cliente-provincia" required>
+                        <option value="" disabled selected>Elegí tu provincia...</option>
+                        <option value="CABA">Capital Federal (CABA)</option>
+                        <option value="GBA">Gran Buenos Aires (GBA)</option>
+                        <option value="INTERIOR">Buenos Aires (Interior)</option>
+                        <option value="CT">Catamarca</option>
+                        <option value="CH">Chaco</option>
+                        <option value="CB">Chubut</option>
+                        <option value="CBA">Córdoba</option>
+                        <option value="CR">Corrientes</option>
+                        <option value="ER">Entre Ríos</option>
+                        <option value="FO">Formosa</option>
+                        <option value="JY">Jujuy</option>
+                        <option value="LP">La Pampa</option>
+                        <option value="LR">La Rioja</option>
+                        <option value="MZ">Mendoza</option>
+                        <option value="MI">Misiones</option>
+                        <option value="NQ">Neuquén</option>
+                        <option value="RN">Río Negro</option>
+                        <option value="SA">Salta</option>
+                        <option value="SJ">San Juan</option>
+                        <option value="SL">San Luis</option>
+                        <option value="SC">Santa Cruz</option>
+                        <option value="SF">Santa Fe</option>
+                        <option value="SE">Santiago del Estero</option>
+                        <option value="TF">Tierra del Fuego</option>
+                        <option value="TU">Tucumán</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Dirección y Altura</label>
+                    <input type="text" id="cliente-direccion" required placeholder="Ej: San Martín 123">
+                </div>
+                <div class="input-group">
+                    <label>Código Postal</label>
+                    <input type="text" id="cliente-cp" required placeholder="Ej: 1425">
+                </div>
+
+                <div id="caja-logistica"
+                    style="display: none; margin-top: 20px; padding: 15px; border: 1px solid #00e5ff;">
+                    <h3 style="color: #00e5ff; margin-bottom: 10px;">Método de Envío</h3>
+                    <select id="metodo-envio" style="width: 100%; padding: 10px; background: #000; color: #fff;">
+                    </select>
+                </div>
+            </form> 
+        </section>
+
+        <section class="checkout-resumen-section">
+            <h3>Resumen de tu pedido</h3>
+
+            <div id="lista-remeras" style="margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px;">
+            </div>
+
+            <div id="caja-cupon" style="margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #333;">
+                <label style="font-size: 0.85rem; color: #aaa;">¿Tenés un código de descuento?</label>
+                <div style="display: flex; gap: 10px; margin-top: 8px;">
+                    <input type="text" id="input-cupon" placeholder="Ej: BALIANT2026" style="flex: 1; padding: 10px; background: #111; border: 1px solid #333; color: #00e5ff; text-transform: uppercase; border-radius: 6px; outline: none; font-weight: bold; letter-spacing: 1px;">
+                    <button type="button" onclick="aplicarCupon()" style="background: #00e5ff; color: #000; border: none; padding: 0 20px; font-weight: 800; border-radius: 6px; cursor: pointer; transition: 0.2s;">APLICAR</button>
+                </div>
+                <p id="mensaje-cupon" style="font-size: 0.8rem; margin-top: 8px; display: none; font-weight: 600;"></p>
+            </div>
+
+            <div id="renglon-descuento" style="display: none; justify-content: space-between; margin-bottom: 10px; color: #25d366; font-weight: bold;">
+                <span>Descuento aplicado:</span>
+                <span id="txt-descuento">-$0</span>
+            </div>
+
+            <div class="checkout-totales">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <span>Subtotal (Ropa):</span>
+                    <span id="txt-subtotal">$0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px; color: #aaa;">
+                    <span>Envío:</span>
+                    <span id="txt-envio">Seleccioná provincia</span>
+                </div>
+                <div
+                    style="display: flex; justify-content: space-between; font-size: 1.5rem; font-weight: 900; color: #00e5ff; margin-top: 15px; border-top: 1px solid #333; padding-top: 10px;">
+                    <span>TOTAL:</span>
+                    <span id="txt-total">$0</span>
+                </div>
+            </div>
+
+            <div id="seccion-crear-cuenta" class="checkout-registro" style="margin-top: 20px; padding-top: 15px; border-top: 1px dashed #333; ">
+                <div class="checkbox-neon" style="margin-bottom: 5px; display: flex; gap: 8px;" >
+                    <input type="checkbox" id="crear-cuenta-check">
+                    <label for="crear-cuenta-check" style="font-size: 0.85rem; color: #00e5ff; font-weight: 700; margin-top: 1px;">
+                        Guardar mis datos para el futuro
+                    </label>
+                </div>
+                <p style="font-size: 0.75rem; color: #888; margin-top: 0; padding-left: 30px; line-height: 1.3; margin-bottom: 0;">
+                    Creá una cuenta para ver el estado de tu pedido.
+                </p>
+                
+                <input type="hidden" id="registro-password-hidden">
+            </div>
+
+            <button id="btn-pagar-mp" class="btn-neon-mp" ... >PAGAR CON MERCADO PAGO</button>
+        </section>
+    </main>
+
+    <div id="modal-crear-cuenta" class="modal-oculto">
+        <div class="modal-contenido" style="max-width: 380px; text-align: center;">
+            <button type="button" class="btn-cerrar-modal" id="btn-cerrar-modal-cuenta">×</button>
+
+            <h3 style="color: #00e5ff; margin-bottom: 10px; font-weight: 800; text-transform: uppercase;">Crear
+                Contraseña</h3>
+            <p style="font-size: 0.85rem; color: #aaa; margin-bottom: 25px;">Escribí una clave para proteger tu nueva
+                cuenta en BALIANT.</p>
+
+            <div class="input-group" style="text-align: left;">
+                <input type="password" id="input-modal-password" placeholder="Mínimo 6 caracteres"
+                    style="text-align: center;">
+            </div>
+
+            <button type="button" id="btn-confirmar-cuenta" class="btn-neon-mp" style="margin-top: 10px;">GUARDAR Y
+                CONTINUAR</button>
+        </div>
+    </div>
+    
+    <script src="checkout.js?v=2"></script>
+</body>
+
+</html>

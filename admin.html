@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BALIANT - Panel de Control</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { background-color: #050505; color: white; font-family: 'Montserrat', sans-serif; padding: 40px; margin: 0; }
+        .badge-producto { background: #1a1a1a; border: 1px solid #333; padding: 5px 10px; border-radius: 4px; display: inline-block; margin: 2px; font-size: 0.8rem; }
+        .talle-destacado { color: #00e5ff; font-weight: 800; margin-left: 5px; }
+        .btn-enviar { background: #00e5ff; color: #000; border: none; padding: 8px 15px; border-radius: 6px; font-weight: 800; cursor: pointer; text-transform: uppercase; font-size: 0.8rem; transition: all 0.2s; }
+        .btn-enviar:hover { background: #00b3cc; transform: scale(1.05); }
+        .btn-enviado { background: #128C7E; color: #fff; border: none; padding: 8px 15px; border-radius: 6px; font-weight: 800; cursor: not-allowed; text-transform: uppercase; font-size: 0.8rem; opacity: 0.8; }
+        th { padding: 15px; border-bottom: 2px solid #333; color: #00e5ff; font-size: 0.9rem; text-transform: uppercase; text-align: left; }
+        td { padding: 15px; border-bottom: 1px solid #222; vertical-align: middle; }
+        tr:hover { background-color: #111; }
+    </style>
+</head>
+<body>
+
+    <header style="text-align: center; margin-bottom: 40px; border-bottom: 2px solid #00e5ff; padding-bottom: 20px;">
+        <h1 style="color: #00e5ff; font-weight: 900; letter-spacing: 2px; margin-bottom: 5px;">BALIANT ADMIN PRO</h1>
+        <p style="color: #aaa; margin-top: 0;">Gestión de Envíos y Ventas</p>
+    </header>
+
+    <main style="max-width: 1400px; margin: 0 auto; background: #0a0a0a; padding: 30px; border-radius: 12px; border: 1px solid #333;">
+        <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background-color: #111;">
+                        <th>Orden</th>
+                        <th>Cliente</th>
+                        <th>Dirección de Envío</th>
+                        <th>Productos Vendidos (Talles)</th>
+                        <th>Total</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-ventas-body">
+                    <tr><td colspan="7" style="text-align:center; padding: 30px; color: #aaa;">Conectando con la base de datos de BALIANT...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const tablaBody = document.getElementById('tabla-ventas-body');
+            let adminPass = localStorage.getItem('baliant_llave_admin');
+
+            if (!adminPass) {
+                adminPass = prompt("🔒 ACCESO RESTRINGIDO\nIngresá la contraseña de administrador de BALIANT:");
+                if (!adminPass) {
+                    document.body.innerHTML = "<h1 style='color:#ff4444; text-align:center; margin-top:100px;'><i class='fa-solid fa-lock'></i> ACCESO BLOQUEADO</h1>";
+                    return;
+                }
+            }
+
+            try {
+                // 🔥 Asegurate de que la IP apunte a tu backend
+                const respuesta = await fetch('https://baliant-backend.onrender.com/api/ventas', {
+                    headers: { 'admin-pass': adminPass }
+                });
+
+                if (respuesta.status === 401) {
+                    localStorage.removeItem('baliant_llave_admin');
+                    alert("❌ Contraseña incorrecta. Acceso denegado.");
+                    window.location.reload();
+                    return;
+                }
+
+                localStorage.setItem('baliant_llave_admin', adminPass);
+                const ventas = await respuesta.json();
+
+                tablaBody.innerHTML = '';
+
+                if (ventas.length === 0) {
+                    tablaBody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding: 30px; color: #888;">No hay ventas registradas todavía. ¡A promocionar la página!</td></tr>';
+                    return;
+                }
+
+                ventas.forEach(venta => {
+                    // Procesamos el JSON de los productos
+                    let listaProductosHTML = '<span style="color:#666; font-size:0.8rem;">Sin detalle</span>';
+                    
+                    if (venta.productos_vendidos) {
+                        try {
+                            const productosArray = typeof venta.productos_vendidos === 'string' ? JSON.parse(venta.productos_vendidos) : venta.productos_vendidos;
+                            
+                            if (productosArray.length > 0) {
+                                listaProductosHTML = productosArray.map(prod => {
+                                    const nombre = prod.title || prod.nombre || 'Producto';
+                                    const cant = prod.quantity || prod.cantidad || 1;
+                                    const talle = prod.description || prod.talle || '-';
+                                    
+                                    // Ignoramos el ítem "Costo de Envío" para que no ensucie la lista de ropa
+                                    if (nombre.includes("Costo de Envío")) return '';
+
+                                    return `<div class="badge-producto">${cant}x ${nombre} <span class="talle-destacado">Talle: ${talle}</span></div>`;
+                                }).join('');
+                            }
+                        } catch(e) { console.error("Error leyendo JSON de productos", e); }
+                    }
+
+                    // Botón de acción dependiendo del estado
+                    let botonAccion = '';
+                    if (venta.estado === 'approved') {
+                        botonAccion = `<button class="btn-enviar" onclick="marcarComoEnviado('${venta.id_pago}')"><i class="fa-solid fa-box"></i> Marcar Enviado</button>`;
+                    } else if (venta.estado === 'enviado') {
+                        botonAccion = `<button class="btn-enviado" disabled><i class="fa-solid fa-check-double"></i> Despachado</button>`;
+                    } else {
+                        botonAccion = `<span style="color:#888; font-size:0.8rem;">Pago ${venta.estado}</span>`;
+                    }
+
+                    // Armamos la fila
+                    const fila = document.createElement('tr');
+                    fila.innerHTML = `
+                        <td style="color: #aaa; font-weight: bold;">#${venta.id_pago}</td>
+                        <td>
+                            <div style="font-weight: bold; color: #fff;">${venta.nombre_cliente || 'Sin nombre'}</div>
+                            <div style="font-size: 0.8rem; color: #888; margin-top: 3px;"><i class="fa-solid fa-phone"></i> ${venta.telefono || '-'}</div>
+                        </td>
+                        <td>
+                            <div style="color: #ccc;">${venta.direccion || '-'}</div>
+                            <div style="font-size: 0.8rem; color: #888; margin-top: 3px;">${venta.provincia || '-'} (CP: ${venta.codigo_postal || '-'})</div>
+                        </td>
+                        <td style="max-width: 350px;">${listaProductosHTML}</td>
+                        <td style="font-weight: 900; color: #00e5ff;">$${Number(venta.total).toLocaleString('es-AR')}</td>
+                        <td style="font-weight: bold; color: ${venta.estado === 'approved' ? '#00e5ff' : (venta.estado === 'enviado' ? '#128C7E' : '#ff4444')}; text-transform: uppercase;">
+                            ${venta.estado}
+                        </td>
+                        <td>${botonAccion}</td>
+                    `;
+                    
+                    tablaBody.appendChild(fila);
+                });
+
+            } catch (error) {
+                console.error('Error:', error);
+                tablaBody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding: 30px; color: #ff4444;">❌ No se pudo conectar con el servidor de BALIANT. Revisá que esté prendido.</td></tr>';
+            }
+        });
+
+        // 🔥 FUNCIÓN PARA ACTUALIZAR EL ESTADO EN LA BASE DE DATOS
+        async function marcarComoEnviado(idPago) {
+            if(!confirm(`¿Estás seguro de marcar la orden #${idPago} como DESPACHADA?`)) return;
+
+            const adminPass = localStorage.getItem('baliant_llave_admin');
+            
+            try {
+                const respuesta = await fetch(`https://baliant-backend.onrender.com/api/ventas/${idPago}/enviar`, {
+                    method: 'PUT',
+                    headers: { 'admin-pass': adminPass }
+                });
+
+                if (respuesta.ok) {
+                    alert("✅ ¡Pedido marcado como enviado exitosamente!");
+                    window.location.reload(); // Recarga para ver el botón en verde
+                } else {
+                    alert("❌ Hubo un error al actualizar el estado.");
+                }
+            } catch (error) {
+                alert("❌ Error de conexión al intentar actualizar.");
+            }
+        }
+    </script>
+</body>
+</html>
+
+    <script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,1519 @@
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* PALETA DE COLORES BALIANT */
+:root {
+    --azul-medianoche: #0B1D3A;
+    --cian-neon: #00c3ff;
+    --gris-metalizado: #8C9298;
+    --fondo-web: #F4F6F8;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--fondo-web);
+    margin: 0;
+    color: #333;
+}
+
+/* MENU SUPERIOR (NAVBAR) */
+header {
+    background-color: var(--azul-medianoche);
+    color: white;
+    padding: 15px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid #00C5FF;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.logo-img {
+    height: 66px;
+    /* Podés agrandarlo o achicarlo cambiando este número */
+    width: 100%;
+    /* ✨ EL TRUCO MAGICO: Esto borra el fondo negro del JPG y deja solo el neón ✨ */
+    mix-blend-mode: screen !important;
+    background-color: transparent !important;
+    transition: transform 0.2s ease;
+}
+
+.logo-img:hover {
+    transform: scale(1.05);
+    /* Efecto para que se agrande un poquito al pasar el mouse */
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 40px;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: var(--cian-neon);
+}
+
+.carrito-icono {
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.carrito-icono:hover {
+    color: var(--cian-neon);
+}
+
+/* --- HERO SECTION (BANNER PRINCIPAL) --- */
+.hero-section {
+    position: relative;
+    height: 100vh;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    /* Por ahora usamos una imagen de textura oscura de internet, después ponés una tuya */
+    background-image: url('Hero.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    /* Efecto Parallax copado al scrollear */
+    overflow: hidden;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(11, 29, 58, 0.7) 0%, rgba(0, 0, 0, 0.9) 100%);
+    z-index: 1;
+}
+
+.hero-contenido {
+    position: relative;
+    z-index: 2;
+    color: white;
+    max-width: 800px;
+    padding: 0 20px;
+}
+
+.hero-contenido h1 {
+    font-size: 4rem;
+    /* Súper gigante */
+    font-weight: 800;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+    line-height: 1.1;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.hero-contenido h1 span {
+    color: var(--cian-neon);
+    /* Resalta la marca con tu color neón */
+}
+
+.hero-contenido p {
+    font-size: 1.2rem;
+    color: #e0e0e0;
+    margin-bottom: 40px;
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+.btn-hero {
+    display: inline-block;
+    background: transparent;
+    color: white;
+    border: 2px solid var(--cian-neon);
+    padding: 15px 40px;
+    font-size: 1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+}
+
+.btn-hero:hover {
+    background: var(--cian-neon);
+    color: var(--azul-medianoche);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+    transform: translateY(-3px);
+}
+
+/* Efecto para que el botón de bajar sea suave */
+html {
+    scroll-behavior: smooth;
+}
+
+/* --- GRID DE PRODUCTOS (NUEVO DISEÑO PREMIUM) --- */
+.productos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 40px;
+    /* Más espacio entre tarjetas para que "respiren" */
+    padding: 80px 50px;
+    /* Más aire arriba y abajo */
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.tarjeta-producto {
+    background: white;
+    border-radius: 15px;
+    /* Bordes un poco más redondeados */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    /* Sombra mucho más sutil y limpia */
+    text-align: left;
+    /* Alineado a la izquierda para un look más moderno */
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* Para que nada se salga de los bordes redondeados */
+    border: none;
+    /* Sacamos el borde fijo, queda más limpio */
+    position: relative;
+}
+
+.tarjeta-producto:hover {
+    transform: translateY(-10px);
+    /* Un levante un poco mayor */
+    box-shadow: 0 15px 20px rgba(12, 29, 56, 0.644);
+    /* Sombra sutil con el color de la marca */
+}
+
+/* --- CONTENEDOR DE IMAGEN (El Placeholder) --- */
+.imagen-producto-container {
+    background-color: #f5f5f5;
+    /* Un gris muy suave de fondo unificado */
+    height: 400px;
+    /* Altura fija para que todas las fotos queden iguales */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.icon-placeholder {
+    font-size: 6rem;
+    color: #ccc;
+    /* Gris suave para el icono */
+}
+
+/* --- INFO DEL PRODUCTO --- */
+.info-producto-card {
+    padding: 25px;
+    /* Aire interno de la tarjeta */
+    flex-grow: 1;
+    /* Ocupa el espacio restante */
+    display: flex;
+    flex-direction: column;
+}
+
+.tarjeta-producto h3 {
+    /* Nombre de la remera */
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #111;
+    /* Negro casi puro */
+    margin: 0 0 10px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.tarjeta-producto .descripcion-card {
+    /* Descripción */
+    font-size: 13px;
+    color: #666;
+    line-height: 1.6;
+    margin: 0 0 20px 0;
+    font-weight: 400;
+}
+
+/* ACTUALIZAMOS EL ESTILO DE .precio EXISTENTE */
+.precio {
+    font-size: 1.6rem !important;
+    /* Más grande y potente */
+    font-weight: 800;
+    color: #000 !important;
+    /* Negro puro para resaltar el valor */
+    margin: auto 0 0 0 !important;
+    /* Empuja el precio hacia abajo si falta info */
+    padding-top: 15px;
+}
+
+/* --- BOTÓN DE COMPRA REINVENTADO --- */
+.btn-comprar {
+    background: #111;
+    /* Fondo negro minimalista */
+    color: white;
+    border: 2px solid #111;
+    padding: 18px;
+    cursor: pointer;
+    border-radius: 0 0 15px 15px;
+    /* Redondeado solo abajo para que se integre a la tarjeta */
+    font-weight: 800;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    width: 100%;
+    transition: all 0.3s ease;
+    border-top: none;
+}
+
+.btn-comprar:hover {
+    background: var(--cian-neon);
+    /* Explota el neón */
+    color: var(--azul-medianoche);
+    border-color: var(--cian-neon);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+}
+
+/* ==========================================
+   CARRITO LATERAL (VERSIÓN DARK PREMIUM)
+   ========================================== */
+.carrito-lateral {
+    position: fixed;
+    top: 0;
+    right: -450px;
+    width: 350px;
+
+    /* 🚀 MAGIA ANTI-BARRAS DE CELULAR (Dynamic Viewport Height) */
+    height: 100dvh !important;
+
+    background-color: #0B1D3A;
+    color: #fff;
+    /* Textos blancos */
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.6);
+    /* Sombra celeste de fondo */
+    transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 100000;
+
+    /* Le damos más padding (espacio) abajo para que el botón suba */
+    padding: 25px 25px 40px 25px;
+
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    border-left: 2px solid #00e5ff;
+    /* Línea de corte neón */
+}
+
+.carrito-lateral.abierto {
+    right: 0;
+}
+
+.cabecera-carrito {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #00e5ff;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.cabecera-carrito h2 {
+    color: #fff;
+    margin: 0;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.cerrar-carrito {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #aaa;
+    transition: 0.3s;
+}
+
+.cerrar-carrito:hover {
+    color: #00e5ff;
+}
+
+.items-carrito {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.item-carrito {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #222;
+}
+
+.item-info p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #ccc;
+}
+
+.item-nombre {
+    font-weight: 800;
+    color: #fff;
+}
+
+.total-carrito {
+    margin-top: 20px;
+    font-size: 22px;
+    font-weight: 800;
+    text-align: right;
+    color: #fff;
+}
+
+.btn-pagar {
+    background: #00e5ff;
+    color: #000;
+    border: none;
+    padding: 18px;
+    margin-top: 15px;
+    border-radius: 8px;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 100%;
+}
+
+.btn-pagar:hover {
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.6);
+    transform: translateY(-2px);
+}
+
+.item-precio {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn-eliminar {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #ff4d4d;
+    transition: 0.2s;
+    padding: 0;
+}
+
+.btn-eliminar:hover {
+    transform: scale(1.2);
+}
+
+/* --- NOTIFICACIÓN PROFESIONAL (TOAST) --- */
+.toast-notificacion {
+    position: fixed;
+    bottom: 50px;
+    right: -400px;
+    /* Arranca escondido fuera de la pantalla por la derecha */
+    background-color: var(--azul-medianoche);
+    color: white;
+    padding: 15px 25px;
+    border-left: 5px solid var(--cian-neon);
+    /* El toque azul eléctrico */
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 9999;
+    transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    /* Animación suave */
+}
+
+/* Esta clase se la vamos a poner con JavaScript para que entre a la pantalla */
+.toast-notificacion.mostrar {
+    right: 30px;
+}
+
+.toast-icono {
+    color: var(--cian-neon);
+    font-size: 22px;
+}
+
+/* --- FOOTER (PIE DE PÁGINA) --- */
+.footer-baliant {
+    background-color: var(--azul-medianoche);
+    color: #ffffff;
+    padding: 60px 50px 20px;
+    /* Mucho aire arriba, poco abajo */
+    font-family: 'Montserrat', sans-serif;
+    border-top: 4px solid var(--cian-neon);
+    /* La línea eléctrica que separa la ropa del footer */
+    margin-top: 60px;
+    /* Lo separa del contenido de arriba */
+}
+
+.footer-contenido {
+    display: flex;
+    flex-wrap: wrap;
+    /* Para que en celulares se acomode solo */
+    justify-content: space-between;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    /* Línea gris súper sutil */
+    padding-bottom: 40px;
+}
+
+/* Columna del Logo */
+.footer-logo-seccion .footer-logo {
+    height: 70px;
+    /* Logo un poco más grande que arriba */
+    mix-blend-mode: screen;
+    /* El truco para borrar el fondo negro */
+    margin-bottom: 15px;
+    margin-left: -10px;
+    /* Para alinear visualmente la "B" con el texto de abajo */
+}
+
+.footer-logo-seccion p {
+    color: var(--gris-metalizado);
+    font-size: 14px;
+    max-width: 280px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Columnas de Links y Redes */
+.footer-links-seccion,
+.footer-social-seccion {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.footer-links-seccion h3,
+.footer-social-seccion h3 {
+    color: var(--cian-neon);
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 5px 0;
+}
+
+.footer-links-seccion a {
+    color: #cccccc;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease, padding-left 0.3s ease;
+}
+
+/* Efecto copado: la palabra se mueve un poquito a la derecha al pasar el mouse */
+.footer-links-seccion a:hover {
+    color: var(--cian-neon);
+    padding-left: 5px;
+}
+
+/* Círculos de redes sociales */
+.redes-iconos {
+    display: flex;
+    gap: 15px;
+}
+
+.redes-iconos a {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.05);
+    /* Un fondo casi transparente */
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 20px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.redes-iconos a:hover {
+    background-color: var(--cian-neon);
+    color: var(--azul-medianoche);
+    transform: translateY(-5px);
+    /* Saltito hacia arriba */
+    box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+}
+
+/* La línea de abajo de todo (Copyright y tarjetas) */
+.footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 20px auto 0;
+    font-size: 13px;
+    color: var(--gris-metalizado);
+}
+
+.medios-pago {
+    display: flex;
+    gap: 20px;
+    font-size: 26px;
+    color: #aaaaaa;
+}
+
+/* --- ESTILOS EXCLUSIVOS PARA EL CHECKOUT BALIANT (REINICIO) --- */
+.checkout-body {
+    background-color: #050505;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0px;
+}
+
+.checkout-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.checkout-container {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.checkout-form-section,
+.checkout-resumen-section {
+    background: #111;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #222;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+.input-group input,
+.input-group select {
+    padding: 12px;
+    background: #000;
+    border: 1px solid #333;
+    color: white;
+    border-radius: 6px;
+    outline: none;
+    transition: border 0.3s;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    border-color: #00e5ff;
+    /* Neón BALIANT */
+}
+
+/* Botón Mercado Pago */
+.btn-neon-mp {
+    width: 100%;
+    padding: 15px;
+    background: #00e5ff;
+    color: #000;
+    border: none;
+    font-weight: 900;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.btn-neon-mp:hover {
+    box-shadow: 0 0 20px #00e5ff;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 850px) {
+    .checkout-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- MEJORAS VISUALES PARA LOS DESPLEGABLES (SELECTS) DE BALIANT --- */
+
+.input-group select,
+#caja-logistica select {
+    appearance: none;
+    /* Saca la flecha fea genérica del navegador */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #0a0a0a;
+    /* Un negro casi puro, muy elegante */
+    color: #fff;
+    border: 1px solid #333;
+    padding: 14px 15px;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+
+    /* Flechita personalizada blanca (en formato SVG) */
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23FFFFFF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px top 50%;
+    background-size: 12px auto;
+}
+
+/* Efecto sutil cuando el cliente pasa el mouse por encima */
+.input-group select:hover,
+#caja-logistica select:hover {
+    border-color: #555;
+    background-color: #111;
+}
+
+/* Efecto NEÓN cuando el cliente hace clic para elegir opción */
+.input-group select:focus,
+#caja-logistica select:focus {
+    border-color: #00e5ff;
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.25);
+    outline: none;
+}
+
+/* Estilo para la lista de opciones que se abre */
+.input-group select option,
+#caja-logistica select option {
+    background-color: #111;
+    color: #fff;
+    padding: 15px;
+    font-size: 0.95rem;
+}
+
+/* Aseguramos que el select del método de envío no tenga bordes raros */
+#metodo-envio {
+    border: 1px solid #00e5ff !important;
+    background-color: #050505 !important;
+}
+
+/* =========================================
+   SKELETON LOADING - EFECTO PREMIUM BALIANT
+   ========================================= */
+
+/* La animación del brillo pasando */
+@keyframes skeleton-shine {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* La clase base que le da el color oscuro y el efecto */
+.skeleton {
+    background: #00082c;
+    background: linear-gradient(90deg, #001881 25%, #000622 50%, #000c44 75%);
+    background-size: 200% 100%;
+    animation: skeleton-shine 1.5s infinite linear;
+    border-radius: 8px;
+}
+
+/* Tamaños específicos para simular las partes del producto */
+.skeleton-img {
+    width: 100%;
+    height: 350px;
+    /* Alto de la foto de tu remera */
+    margin-bottom: 15px;
+    border-radius: 12px;
+}
+
+.skeleton-text-title {
+    width: 80%;
+    height: 28px;
+    margin-bottom: 10px;
+}
+
+.skeleton-text-price {
+    width: 40%;
+    height: 22px;
+    margin-bottom: 20px;
+}
+
+.skeleton-btn {
+    width: 100%;
+    height: 50px;
+    border-radius: 8px;
+}
+
+/* --- NOTIFICACIÓN TOAST (CARRITO VACÍO) BALIANT --- */
+.toast-baliant {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    /* Empieza escondido abajo */
+    background-color: #0a0a0a;
+    color: #fff;
+    padding: 16px 24px;
+    border-radius: 8px;
+    border-left: 4px solid #ff4444;
+    /* Borde rojo de error */
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    z-index: 10000;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    /* Animación de rebote */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.toast-baliant.mostrar {
+    transform: translateX(-50%) translateY(0);
+    /* Sube y aparece */
+    opacity: 1;
+}
+
+/* ==========================================
+   SELECTOR DE TALLES BALIANT
+   ========================================== */
+.contenedor-talles {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.btn-talle {
+    width: 45px;
+    height: 45px;
+    background: transparent;
+    border: 2px solid #333;
+    color: #0B1D3A;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Efecto hover solo si NO está agotado */
+.btn-talle:not(.agotado):hover {
+    border-color: #00e5ff;
+    color: #00e5ff;
+}
+
+/* Cuando el cliente lo selecciona */
+.btn-talle.seleccionado {
+    background: #00e5ff;
+    border-color: #00e5ff;
+    color: #000;
+}
+
+/* ==========================================
+   DISEÑO DE TALLES AGOTADOS Y TEXTO DISCRETO
+   ========================================== */
+.btn-talle.sin-stock {
+    opacity: 0.3;
+    text-decoration: line-through 2px red;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.btn-talle.sin-stock:hover {
+    border-color: #25D366;
+    /* Verde WhatsApp */
+    color: #25D366;
+    text-decoration: line-through 2px transparent;
+}
+
+.btn-talle.sin-stock.seleccionado {
+    border-color: #25D366;
+    /* Verde WhatsApp */
+    color: #25D366;
+    background: transparent;
+    box-shadow: 0 0 15px rgba(37, 211, 102, 0.2);
+}
+
+.texto-consulta-stock a:hover {
+    color: #1e0d68 !important;
+    text-shadow: 0 0 5px rgba(0, 238, 255, 0.712);
+}
+
+
+
+/* ==========================================
+   CALCULADORA DE TALLES BALIANT (MODAL)
+   ========================================== */
+.modal-oculto {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal-oculto.mostrar-modal {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-contenido {
+    background: #050505;
+    border: 1px solid #222;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+}
+
+.modal-oculto.mostrar-modal .modal-contenido {
+    transform: translateY(0);
+}
+
+.btn-cerrar-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    color: #666;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-cerrar-modal:hover {
+    color: #fff;
+}
+
+#input-altura:focus,
+#input-peso:focus {
+    border-color: #00e5ff;
+}
+
+/* ==========================================
+   BOTONES DE CATEGORÍA (BASE)
+   ========================================== */
+.btn-categoria {
+    background: transparent;
+    color: #aaa;
+    border: none;
+    font-size: 0.95rem;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-categoria:hover {
+    color: #fff;
+}
+
+/* ==========================================
+   DISEÑO PC (Limpio y centrado)
+   ========================================== */
+.pc-only {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.pc-only .btn-categoria {
+    padding: 5px 0;
+}
+
+.pc-only .btn-categoria.activo {
+    color: #00e5ff;
+    border-bottom: 2px solid #00e5ff;
+}
+
+/* Ocultamos la barra de celular en PC */
+.movil-only {
+    display: none;
+}
+
+/* ==========================================
+   BARRA DE CONTROLES, BÚSQUEDA Y ORDEN
+   ========================================== */
+.controles-tienda {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    /* Permite que se acomoden si falta espacio */
+    gap: 15px;
+    max-width: 1300px;
+    margin: 40px auto 0 auto;
+    padding: 0 50px;
+}
+
+/* --- ESTILOS DEL BUSCADOR --- */
+.buscador-container {
+    position: relative;
+    flex-grow: 1;
+    /* Se estira para ocupar espacio */
+    max-width: 400px;
+    /* Pero no se hace infinito en PC */
+}
+
+.buscador-container i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--cian-neon);
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.buscador-container input {
+    width: 100%;
+    background-color: #050505;
+    color: #fff;
+    border: 1px solid #333;
+    padding: 12px 15px 12px 40px;
+    /* El 40px deja espacio para la lupa */
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+/* Efecto Neón al hacer clic para escribir */
+.buscador-container input:focus {
+    border-color: #00e5ff;
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+}
+
+.buscador-container input:focus+i,
+.buscador-container input:focus~i {
+    /* Ilumina la lupa también */
+    color: #00e5ff;
+}
+
+.buscador-container input::placeholder {
+    color: #555;
+    font-weight: 500;
+}
+
+/* --- ESTILOS DEL SELECTOR DE ORDEN --- */
+.ordenar-por select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: #050505;
+    color: #fff;
+    border: 1px solid #333;
+    padding: 12px 40px 12px 15px;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23FFFFFF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px top 50%;
+    background-size: 10px auto;
+}
+
+.ordenar-por select:hover {
+    border-color: #666;
+}
+
+.ordenar-por select:focus {
+    border-color: #00e5ff;
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+    outline: none;
+}
+
+#catalogo {
+    scroll-margin-top: 140px;
+    /* Calcula el espacio del header para no tapar el inicio */
+}
+
+/* Ajuste Inteligente para Celulares */
+@media (max-width: 768px) {
+    .controles-tienda {
+        flex-direction: column;
+        /* Apila el buscador y el botón de orden */
+        align-items: stretch !important;
+        /* Estira ambos de borde a borde */
+        padding: 0 15px;
+        margin-top: 20px;
+    }
+
+    .buscador-container {
+        max-width: 100%;
+    }
+
+    .ordenar-por select {
+        width: 100%;
+    }
+
+    /* El botón ordenar ocupa todo el ancho */
+}
+
+/* ==========================================
+   BADGE DE SIN STOCK
+   ========================================== */
+.badge-agotado {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ff004c;
+    color: #fff;
+    padding: 5px 12px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    border-radius: 4px;
+    z-index: 10;
+    box-shadow: 0 4px 10px rgba(255, 0, 76, 0.4);
+    letter-spacing: 1px;
+}
+
+.imagen-producto-container {
+    position: relative;
+}
+
+/* Clave para que el cartel quede adentro de la foto */
+
+
+/* =========================================================================
+   2. 📱 RESPONSIVE DESIGN (CELULARES) - BLOQUE ÚNICO Y ORDENADO
+   ========================================================================= */
+@media (max-width: 768px) {
+
+    /* Esta clase se la vamos a poner con JavaScript para que entre a la pantalla */
+    .toast-notificacion.mostrar {
+        right: 11px !important;
+    }
+
+    #catalogo {
+        scroll-margin-top: 144px;
+        /* Calcula el espacio del header para no tapar el inicio */
+    }
+
+    /* MATA EL ESPACIO BLANCO Y BAJA EL CONTENIDO DEBAJO DEL HEADER */
+    html,
+    body {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        margin: 0 !important;
+
+        /* MAGIA: Empuja TODAS las páginas hacia abajo (60px del logo + 50px del menú) */
+        padding: 35px 0 0 0 !important;
+    }
+
+    * {
+        box-sizing: border-box !important;
+    }
+
+    /* ==========================================
+       HEADER CELULAR: LA VERSIÓN DEFINITIVA
+       ========================================== */
+    header {
+        padding: 0 !important;
+        flex-wrap: wrap !important;
+        position: fixed !important;
+        z-index: 100 !important;
+        background-color: #0B1D3A !important;
+        width: 100%;
+    }
+
+    /* La fila de arriba: Logo y Carrito */
+    header>div:first-child {
+        position: relative !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+
+        /* 🔥 AUMENTAMOS LA ALTURA DEL DIV PARA QUE ENTRE EL LOGO GRANDE */
+        height: 85px !important;
+        width: 100% !important;
+    }
+
+    .checkout-body {
+        padding-top: 78px !important;
+    }
+
+    /* EL LOGO: AHORA SÍ, GIGANTE Y PROTAGONISTA */
+    .logo-container .movil-only {
+        position: absolute !important;
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
+
+        /* 🔥 AUMENTAMOS EL ANCHO DEL LOGO */
+        width: 200px !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        z-index: 5 !important;
+        mix-blend-mode: screen !important;
+    }
+
+    .logo-container img {
+        width: 100% !important;
+        height: 75px !important;
+
+        /* 🔥 AUMENTAMOS EL TOPE DE ALTURA */
+        max-height: 100px !important;
+        max-width: 200px;
+    }
+
+    .logo-containerProd img {
+        width: 100% !important;
+        height: 50px !important;
+        margin-left: 10px;
+        /* 🔥 AUMENTAMOS EL TOPE DE ALTURA */
+        max-height: 100px !important;
+        max-width: 170px;
+    }
+
+    .logo-containerCheck img {
+        width: 100% !important;
+        height: 50px !important;
+        /* 🔥 AUMENTAMOS EL TOPE DE ALTURA */
+        max-height: 100px !important;
+        max-width: 170px;
+    }
+
+    /* CARRITO: A la derecha, chiquito y sin palabra */
+    .carrito-icono {
+        position: absolute !important;
+        right: 20px !important;
+        z-index: 10 !important;
+        color: #fff !important;
+        font-size: 0 !important;
+        /* TRUCO NINJA: Esto hace invisible la palabra "Carrito" */
+        display: flex !important;
+        align-items: center !important;
+        gap: 5px !important;
+    }
+
+    /* Le devolvemos el tamaño solo al ícono y al número */
+    .carrito-icono i {
+        font-size: 1.1rem !important;
+        /* Ícono chiquito */
+    }
+
+    #contador-carrito {
+        font-size: 0.9rem !important;
+        /* Número chiquito */
+        font-weight: 700 !important;
+    }
+
+    /* MENÚ DESLIZABLE (Píldoras) */
+    header nav {
+        display: flex !important;
+    }
+
+    .pc-only {
+        display: none !important;
+    }
+
+    .movil-only {
+        display: flex !important;
+        overflow-x: auto !important;
+        gap: 10px !important;
+        padding: 10px 20px 10px 20px !important;
+        width: 100% !important;
+    }
+
+    /* HERO SECTION */
+    .hero-section {
+        padding: 40px 13px !important;
+        min-height: auto !important;
+        background-position: 60% 5% !important;
+
+        /* VERSIÓN BORDE A BORDE SUTIL Y CORRECTA */
+        width: 100vw !important;
+        margin-left: calc(-50vw + 50%) !important;
+        max-width: 100vw !important;
+        /* Evita que genere scroll horizontal */
+    }
+
+    .hero-contenido h1 {
+        font-size: 2.2rem !important;
+    }
+
+    /* GRILLA Y PRODUCTOS */
+    .productos-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 10px !important;
+        padding: 5px !important;
+        width: 100% !important;
+    }
+
+    .tarjeta-producto {
+        padding: 10px !important;
+    }
+
+    .imagen-producto-container {
+        height: 150px !important;
+    }
+
+    .info-producto-card h3 {
+        font-size: 0.85rem !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .info-producto-card .precio {
+        font-size: 1rem !important;
+    }
+
+    .btn-comprar {
+        font-size: 0.75rem !important;
+        padding: 10px !important;
+        width: 100% !important;
+    }
+
+    /* DETALLE DEL PRODUCTO */
+    main {
+        padding: 15px !important;
+        margin: 0 !important;
+        width: 100% !important;
+    }
+
+    #detalle-producto {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 20px !important;
+        margin-top: 10px !important;
+        width: 100% !important;
+    }
+
+    #detalle-producto>div {
+        width: 100% !important;
+        min-width: unset !important;
+        flex: none !important;
+    }
+
+    #contenedor-zoom {
+        height: 380px !important;
+        width: 100% !important;
+    }
+
+    #detalle-producto h1 {
+        font-size: 1.8rem !important;
+    }
+
+    #detalle-producto p[style*="font-size: 2rem"] {
+        font-size: 1.5rem !important;
+    }
+
+    /* CARRITO LATERAL CELULAR (Más angosto) */
+    .carrito-lateral {
+        position: fixed !important;
+        top: 0 !important;
+        right: -120% !important;
+
+        /* 🔥 ACORTAMOS LA ANCHURA */
+        width: 81vw !important;
+        /* Antes 85vw. Ahora ocupa solo el 80% de la pantalla */
+        max-width: 100vw !important;
+        /* Tope máximo más chico */
+
+        height: 100dvh !important;
+        padding-bottom: 30px !important;
+        z-index: 9999999 !important;
+        box-shadow: -15px 0 30px rgba(0, 0, 0, 0.8) !important;
+        transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+
+    .carrito-lateral.abierto {
+        right: 0 !important;
+    }
+
+    .item-carrito {
+        padding: 10px 0 !important;
+    }
+
+    .item-nombre {
+        font-size: 0.85rem !important;
+    }
+
+    /* TALLES */
+    .btn-talle.seleccionado {
+        background: var(--cian-neon) !important;
+        color: #000 !important;
+        transform: scale(1.15) !important;
+        box-shadow: 0px 0px 15px rgba(0, 229, 255, 0.6) !important;
+        border: 2px solid #fff !important;
+        z-index: 10 !important;
+    }
+
+    .contenedor-talles {
+        padding: 10px 0 !important;
+        gap: 15px !important;
+        justify-content: left !important;
+    }
+
+    /* TOAST DE ERROR */
+    .toast-baliant {
+        width: 90% !important;
+        left: 5% !important;
+        transform: translateY(150px) !important;
+        font-size: 0.85rem !important;
+        justify-content: center !important;
+        padding: 12px 15px !important;
+        bottom: 80px !important;
+        z-index: 999999999 !important;
+    }
+
+    .toast-baliant.mostrar {
+        transform: translateY(0) !important;
+    }
+
+    /* ==========================================
+       BARRA DE ORDENAR (CELULAR)
+       ========================================== */
+    /* 1. Ocultamos el texto de "Catálogo Baliant" */
+    .resultados-texto {
+        display: none !important;
+    }
+
+    /* 2. Centramos el botón de ordenar para que ocupe bien el espacio */
+    .controles-tienda {
+        justify-content: right;
+        margin-top: 15px !important;
+        margin-bottom: 15px !important;
+    }
+
+    /* MENÚ DESLIZABLE (Píldoras) */
+    header nav {
+        display: flex !important;
+    }
+
+    .pc-only {
+        display: none !important;
+    }
+
+    .movil-only {
+        display: flex !important;
+        overflow-x: auto !important;
+        gap: 10px !important;
+        padding: 10px 20px 10px 20px !important;
+        width: 100% !important;
+
+    }
+
+    /* 🔥 LETRA MÁS CHICA PARA LAS CATEGORÍAS */
+    .movil-only .btn-categoria {
+        background: rgba(255, 255, 255, 0.05) !important;
+        padding: 6px 14px !important;
+        /* Cajas un poco más chicas */
+        border-radius: 20px !important;
+
+        /* Acá está la reducción de la letra (antes era 0.8rem) */
+        font-size: 0.65rem !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+        white-space: nowrap !important;
+        color: #fff !important;
+    }
+
+    .movil-only .btn-categoria.activo {
+        background: #00e5ff !important;
+        color: #000 !important;
+        border-color: #00e5ff !important;
+        box-shadow: 0 0 10px rgba(0, 229, 255, 0.4) !important;
+    }
+
+    /* ==========================================
+       RETOQUES PÁGINA DE PRODUCTO (CELULAR)
+       ========================================== */
+
+    /* 1. Empujamos el "Volver a la tienda" hacia abajo para que el header no lo tape */
+    main>a[href="index.html"] {
+        margin-top: 40px !important;
+        margin-bottom: 20px !important;
+        display: inline-block !important;
+    }
+
+    /* 2. Separamos el Nombre de la remera de las miniaturas */
+    #detalle-producto h1 {
+        margin-top: 35px !important;
+        /* Le da el aire necesario arriba */
+        font-size: 1.9rem !important;
+        /* Achicamos un pelín la letra para que quede más fina */
+        line-height: 1.1 !important;
+        text-align: center !important;
+        /* Centrado queda más premium en el celu */
+    }
+
+    /* 3. Centramos el precio para que acompañe al título */
+    #detalle-producto>div:nth-child(2)>p[style*="font-size: 2rem"] {
+        text-align: center !important;
+        margin-bottom: 30px !important;
+    }
+
+    /* 4. Centramos las fotitos miniatura para que no queden tiradas a la izquierda */
+    #detalle-producto>div:first-child>div:nth-child(2) {
+        justify-content: center !important;
+        margin-top: 20px !important;
+        margin-bottom: 10px !important;
+    }
+
+}

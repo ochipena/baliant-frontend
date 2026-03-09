@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Producto - BALIANT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1px; width: 100%;">
+            <div class="logo-containerProd" onclick="window.location.href='index.html'">
+                <img src="Baliant.jpg" alt="BALIANT" class="logo-img">
+            </div>
+            <div class="carrito-icono" onclick="abrirCarrito()" style="font-size: 1.1rem;">
+                <i class="fa-solid fa-cart-shopping" style="font-size: 1.1rem;"></i> Carrito <span
+                    id="contador-carrito"></span>
+            </div>
+        </div>
+    </header>
+
+    <main style="padding: 40px; max-width: 1200px; margin: 0 auto;">
+        <a href="index.html"
+            style="color: var(--azul-medianoche); text-decoration: none; font-weight: 600; font-size: 14px; text-transform: uppercase; display: block; margin-bottom: 15px; margin-top: -5px;">
+            <i class="fa-solid fa-arrow-left"></i> Volver a la tienda
+        </a>
+
+        <div id="detalle-producto" style="display: flex; gap: 50px; margin-top: 30px; align-items: flex-start;">
+            <h2 style="text-align: center; width: 100%;">Cargando detalles de la prenda...</h2>
+        </div>
+    </main>
+
+    <footer class="footer-baliant">
+        <div class="footer-contenido">
+            <div class="footer-logo-seccion">
+                <img src="Baliant.jpg" alt="BALIANT" class="footer-logo">
+                <p>La nueva piel del deporte. Rendimiento profesional y estilo inconfundible.</p>
+            </div>
+            <div class="footer-links-seccion">
+                <h3>Explorar</h3>
+                <a href="index.html">Inicio</a>
+                <a href="#catalogo">Catálogo</a>
+                <a href="#">Contacto</a>
+            </div>
+            <div class="footer-social-seccion">
+                <h3>Seguinos</h3>
+                <div class="redes-iconos">
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 BALIANT. Todos los derechos reservados.</p>
+            <div class="medios-pago">
+                <i class="fa-brands fa-cc-visa" title="Visa"></i>
+                <i class="fa-brands fa-cc-mastercard" title="Mastercard"></i>
+                <i class="fa-solid fa-money-bill-transfer" title="Mercado Pago"></i>
+            </div>
+        </div>
+    </footer>
+
+    <div id="carrito-lateral" class="carrito-lateral">
+        <div class="cabecera-carrito">
+            <h2>Tu Compra</h2>
+            <button class="cerrar-carrito" onclick="cerrarCarrito()">×</button>
+        </div>
+        <div class="items-carrito" id="items-carrito"></div>
+        <div class="total-carrito">
+            Total: $<span id="precio-total">0</span>
+        </div>
+        <button class="btn-pagar" onclick="irAlCheckout()">Ir a Pagar</button>
+    </div>
+
+    <div id="toast-exito" class="toast-notificacion">
+        <i class="fa-solid fa-circle-check toast-icono"></i>
+        <span>¡Prenda agregada al carrito con éxito!</span>
+    </div>
+
+    <div id="modal-calculadora" class="modal-oculto">
+        <div class="modal-contenido">
+            <button class="btn-cerrar-modal" onclick="cerrarCalculadora()">×</button>
+            <h2 style="color: #00e5ff; margin-top: 0; text-transform: uppercase; font-weight: 800;">Descubrí tu talle
+            </h2>
+            <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 25px;">Ingresá tus medidas para un calce perfecto,
+                versión jugador.</p>
+
+            <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                <div style="flex: 1;">
+                    <label
+                        style="display: block; color: #fff; font-size: 0.8rem; margin-bottom: 8px; font-weight: 600;">ALTURA
+                        (cm)</label>
+                    <input type="number" id="input-altura" placeholder="Ej: 175"
+                        style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Montserrat'; outline: none;">
+                </div>
+                <div style="flex: 1;">
+                    <label
+                        style="display: block; color: #fff; font-size: 0.8rem; margin-bottom: 8px; font-weight: 600;">PESO
+                        (kg)</label>
+                    <input type="number" id="input-peso" placeholder="Ej: 72"
+                        style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Montserrat'; outline: none;">
+                </div>
+            </div>
+
+            <button onclick="calcularTalle()"
+                style="width: 100%; padding: 15px; background: #00e5ff; color: #000; font-weight: 800; border: none; border-radius: 6px; cursor: pointer; margin-bottom: 20px; text-transform: uppercase; transition: transform 0.2s;">
+                Calcular mi talle
+            </button>
+
+            <div id="resultado-talle"
+                style="display: none; text-align: center; padding: 20px; background: #111; border: 1px solid #00e5ff; border-radius: 8px;">
+                <p style="color: #aaa; margin: 0 0 15px 0; font-size: 0.9rem;">Te recomendamos estas opciones:</p>
+                <div style="display: flex; justify-content: center; gap: 30px; margin-bottom: 10px;">
+                    <div>
+                        <h1 id="talle-ajustado"
+                            style="color: #fff; font-size: 2.5rem; margin: 0; text-shadow: 0px 0px 10px rgba(0, 229, 255, 0.4);">
+                            -</h1>
+                        <p style="color: #888; font-size: 0.8rem; margin: 5px 0 0 0; text-transform: uppercase;">Al
+                            cuerpo</p>
+                    </div>
+                    <div style="color: #444; font-size: 2rem; display: flex; align-items: center; font-weight: 300;">ó
+                    </div>
+                    <div>
+                        <h1 id="talle-holgado"
+                            style="color: #fff; font-size: 2.5rem; margin: 0; text-shadow: 0px 0px 10px rgba(0, 229, 255, 0.4);">
+                            -</h1>
+                        <p style="color: #888; font-size: 0.8rem; margin: 5px 0 0 0; text-transform: uppercase;">Más
+                            suelto</p>
+                    </div>
+                </div>
+                <button onclick="cerrarCalculadora()"
+                    style="margin-top: 15px; background: transparent; border: 1px solid #555; color: #fff; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-family: 'Montserrat';">
+                    Elegir mi talle
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 🔥 0. CONFIGURACIÓN VITAL
+        const NUMERO_WHATSAPP = "5491128721534"; // <-- CAMBIÁ ESTO POR TU NÚMERO
+
+        let carrito = JSON.parse(localStorage.getItem('carritoBaliant')) || [];
+        let productoActual = null;
+        let talleElegido = null;
+        let stockTotalPrenda = 0; // 🔥 NUEVA VARIABLE: Suma de todos los talles
+
+        // 1. Agarramos el ID que viene en la URL
+        const parametrosURL = new URLSearchParams(window.location.search);
+        const idProducto = parametrosURL.get('id');
+
+        async function cargarDetalle() {
+            try {
+                const respuesta = await fetch(`https://baliant-backend.onrender.com/productos/${idProducto}`);
+                if (!respuesta.ok) {
+                    document.getElementById('detalle-producto').innerHTML = '<h2>Producto no encontrado.</h2>';
+                    return;
+                }
+
+                productoActual = await respuesta.json();
+
+                // INYECTAMOS LA ESTRUCTURA HTML
+                document.getElementById('detalle-producto').innerHTML = `
+                    <div style="flex: 1; min-width: 300px; max-width: 500px">
+                        <div id="contenedor-zoom" style="width: 100%; height: 500px; border-radius: 12px; overflow: hidden; border: 2px solid #00245f; background: #111; position: relative; cursor: zoom-in;" 
+                            onclick="toggleZoom(event)" onmousemove="moverSiZoom(event)" onmouseleave="quitarZoom()">
+                            <img id="foto-principal" src="${productoActual.imagen_url || 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=600&auto=format&fit=crop'}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.1s ease-out; transform-origin: center center;">
+                        </div>
+                        
+                        <div style="display: flex; gap: 15px; margin-top: 15px; justify-content:center;">
+                            <img class="miniatura" src="${productoActual.imagen_url || 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=600&auto=format&fit=crop'}" onclick="cambiarFoto(this)" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid #00245f; opacity: 1;">
+                            
+                            <img class="miniatura" src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?q=80&w=600&auto=format&fit=crop" onclick="cambiarFoto(this)" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid transparent; opacity: 0.6;">
+                            
+                            <img class="miniatura" src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=600&auto=format&fit=crop" onclick="cambiarFoto(this)" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid transparent; opacity: 0.6;">
+                        </div>
+                    </div>
+
+                    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; margin-top: -40px;">
+                        <h1 style="font-size: 2.5rem; font-weight: 800; color: #000; text-transform: uppercase; margin-bottom: 15px;">${productoActual.nombre}</h1>
+                        <p style="font-size: 2rem; font-weight: 800; color: #000; margin-bottom: 30px;">$${productoActual.precio.toLocaleString('es-AR')}</p>
+                        
+                        <div style="margin-bottom: 0">
+                            <h3 style="font-size: 1rem; text-transform: uppercase; color: #666; margin-bottom: 10px;">Descripción</h3>
+                            <p style="font-size: 1rem; color: #aaa; line-height: 1.8;">${productoActual.descripcion || 'Diseñada para el máximo rendimiento.'}</p>
+                        </div>
+                        
+                        <div style="margin-bottom: 10px;">
+                            <h3 style="font-size: 0.9rem; text-transform: uppercase; color: #888; margin-bottom: 12px;">Seleccioná tu talle:</h3>
+                            
+                            <div id="contenedor-talles" class="contenedor-talles"></div>
+
+                            <p class="texto-consulta-stock" style="margin-top: 15px; font-size: 0.85rem; color: #888; font-weight: 500;">
+                                ¿Tu talle está agotado? <a href="#" id="link-consultar-stock" style="color: #0B1D3A; text-decoration: none; font-weight: 700;"><i class="fa-brands fa-whatsapp"></i> Consultá por próximos ingresos</a>
+                            </p>
+
+                            <p id="texto-stock" style="margin-top: 10px; font-size: 0.85rem; color: #888;"></p>
+                            <p id="error-talle" style="color: #ff4444; font-size: 0.85rem; margin-top: 10px; display: none;">⚠️ Por favor, seleccioná un talle antes de continuar.</p>
+                        </div>
+
+                        <div style="margin-bottom: 25px;">
+                            <button onclick="abrirCalculadora()" style="background: transparent; border: 1px solid #00e5ff; color: #0B1D3A; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; font-family: 'Montserrat', sans-serif; transition: all 0.3s;">
+                                <i class="fa-solid fa-ruler-combined"></i> ¿Cuál es mi talle ideal?
+                            </button>
+                        </div>
+                        
+                        <button id="btn-accion" class="btn-comprar" style="border-radius: 8px; font-size: 1.2rem; padding: 20px; background-color: #00e5ff; color: #000; font-weight: 800; border: none; cursor: pointer; text-transform: uppercase;" onclick="ejecutarAccion()">
+                            SELECCIONÁ UN TALLE
+                        </button>
+                    </div>
+                `;
+
+                dibujarTalles();
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('detalle-producto').innerHTML = '<h2>Hubo un error al cargar la información.</h2>';
+            }
+        }
+
+        function dibujarTalles() {
+            let variantes = [];
+            try {
+                variantes = typeof productoActual.variantes === 'string' ? JSON.parse(productoActual.variantes) : productoActual.variantes;
+            } catch (e) { console.error("Error leyendo los talles", e); }
+
+            const contenedorTalles = document.getElementById('contenedor-talles');
+            contenedorTalles.innerHTML = '';
+
+            // Reiniciamos el contador de stock
+            stockTotalPrenda = 0;
+
+            variantes.forEach(variante => {
+                stockTotalPrenda += variante.stock; // Sumamos el stock de cada talle
+
+                const btn = document.createElement('button');
+                btn.className = 'btn-talle';
+                btn.innerText = variante.talle;
+
+                // SI NO HAY STOCK, LO TACHAMOS
+                if (variante.stock === 0) {
+                    btn.classList.add('sin-stock');
+                }
+
+                btn.onclick = () => {
+                    document.querySelectorAll('.btn-talle').forEach(b => b.classList.remove('seleccionado'));
+                    btn.classList.add('seleccionado');
+                    seleccionarTalle(variante);
+                };
+                contenedorTalles.appendChild(btn);
+            });
+
+            // 🔥 MAGIA: SI LA REMERA ESTÁ 100% AGOTADA
+            if (stockTotalPrenda === 0) {
+                const btnAccion = document.getElementById('btn-accion');
+                document.getElementById('texto-stock').innerText = "Esta prenda está totalmente agotada.";
+                btnAccion.innerText = "PREGUNTAR POR REPOSICIÓN";
+                btnAccion.style.background = "linear-gradient(45deg, #128C7E, #25D366)";
+                btnAccion.style.color = "#fff";
+            }
+
+            // Darle vida al link discreto de WhatsApp
+            document.getElementById('link-consultar-stock').onclick = (e) => {
+                e.preventDefault();
+                const msj = `¡Hola Baliant! Quería consultar si van a tener ingresos pronto de la camiseta *${productoActual.nombre}*, ya que no encontré mi talle en la página.`;
+                window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(msj)}`, '_blank');
+            };
+        }
+
+        let varianteSeleccionada = null; // Guardamos toda la info de la variante
+
+        function seleccionarTalle(variante) {
+            varianteSeleccionada = variante;
+            talleElegido = variante.talle;
+            document.getElementById('error-talle').style.display = 'none';
+
+            const btnAccion = document.getElementById('btn-accion');
+            const textoStock = document.getElementById('texto-stock');
+
+            if (variante.stock === 0) {
+                textoStock.innerText = "Este talle está agotado momentáneamente.";
+                btnAccion.innerText = "Preguntar por Reposición";
+                btnAccion.style.background = "linear-gradient(45deg, #128C7E, #25D366)";
+                btnAccion.style.color = "#fff";
+            } else {
+                textoStock.innerText = `¡Hay stock! (${variante.stock} disponibles)`;
+                btnAccion.innerText = "AGREGAR AL CARRITO";
+                btnAccion.style.background = "#00e5ff";
+                btnAccion.style.color = "#000";
+            }
+        }
+
+        function ejecutarAccion() {
+            if (!talleElegido && stockTotalPrenda === 0) {
+                const msj = `¡Hola Baliant! Quería consultar si van a volver a tener en stock la camiseta *${productoActual.nombre}*, ya que vi que está totalmente agotada.`;
+                window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(msj)}`, '_blank');
+                return;
+            }
+
+            if (!talleElegido) {
+                document.getElementById('error-talle').style.display = 'block';
+                return;
+            }
+
+            if (varianteSeleccionada.stock === 0) {
+                const msj = `¡Hola Baliant! Quería consultar si van a volver a tener en stock la camiseta *${productoActual.nombre}* en talle *${talleElegido}*.`;
+                window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(msj)}`, '_blank');
+            } else {
+                // ACCIÓN CARRITO 
+                const nombreConTalle = `${productoActual.nombre} (Talle ${talleElegido})`;
+
+                // 🔥 AHORA LE PASAMOS EL talleElegido AL FINAL PARA QUE VIAJE SEPARADO
+                agregarDesdeDetalle(productoActual.id, nombreConTalle, productoActual.precio, productoActual.imagen_url, talleElegido);
+
+                talleElegido = null;
+                varianteSeleccionada = null;
+                document.querySelectorAll('.btn-talle').forEach(btn => btn.classList.remove('seleccionado'));
+
+                const btnAccion = document.getElementById('btn-accion');
+                if (stockTotalPrenda === 0) {
+                    btnAccion.innerText = "PREGUNTAR POR REPOSICIÓN";
+                    document.getElementById('texto-stock').innerText = "Esta prenda está totalmente agotada.";
+                } else {
+                    btnAccion.innerText = "SELECCIONÁ UN TALLE";
+                    document.getElementById('texto-stock').innerText = "";
+                }
+            }
+        }
+
+        // 🔥 AHORA LA FUNCIÓN RECIBE EL 'talle' COMO QUINTO DATO
+        function agregarDesdeDetalle(id, nombre, precio, imagen, talle) {
+            const productoExistente = carrito.find(item => item.id === id && item.nombre === nombre);
+
+            if (productoExistente) {
+                productoExistente.cantidad++;
+            } else {
+                // 🔥 GUARDAMOS LA LETRA DEL TALLE SOLA EN LA MEMORIA DEL CARRITO
+                carrito.push({ id, nombre, precio, cantidad: 1, imagen: imagen, talle: talle });
+            }
+
+            localStorage.setItem('carritoBaliant', JSON.stringify(carrito));
+
+            activarDestelloNeon(); // 🔥 ¡FOGONAZO ACÁ!
+
+            const toast = document.getElementById('toast-exito');
+            toast.classList.add('mostrar');
+            setTimeout(() => toast.classList.remove('mostrar'), 3000);
+
+            renderizarCarrito();
+        }
+
+        // --- FUNCIONES DEL CARRITO LATERAL ---
+        function abrirCarrito() { document.getElementById('carrito-lateral').classList.add('abierto'); renderizarCarrito(); }
+        function cerrarCarrito() { document.getElementById('carrito-lateral').classList.remove('abierto'); }
+
+        // ==========================================
+        // 🛒 CONTROLES AVANZADOS DEL CARRITO (+ / - / Tachito)
+        // ==========================================
+
+        function sumarCantidad(id, nombre = null) {
+            // Buscamos el producto exacto
+            const producto = carrito.find(item => item.id === id && (nombre ? item.nombre === nombre : true));
+            if (producto) {
+                producto.cantidad++;
+                localStorage.setItem('carritoBaliant', JSON.stringify(carrito));
+                renderizarCarrito();
+            }
+        }
+
+        function restarCantidad(id, nombre = null) {
+            // Buscamos su posición
+            const indice = carrito.findIndex(item => item.id === id && (nombre ? item.nombre === nombre : true));
+            if (indice !== -1) {
+                if (carrito[indice].cantidad > 1) {
+                    carrito[indice].cantidad--;
+                } else {
+                    carrito.splice(indice, 1); // Si le da al menos y tiene 1, se borra
+                }
+                localStorage.setItem('carritoBaliant', JSON.stringify(carrito));
+                renderizarCarrito();
+            }
+        }
+
+        function eliminarDelCarrito(id, nombre = null) {
+            // El tachito aniquila el producto de una, sin importar la cantidad
+            carrito = carrito.filter(item => !(item.id === id && (nombre ? item.nombre === nombre : true)));
+            localStorage.setItem('carritoBaliant', JSON.stringify(carrito));
+            renderizarCarrito();
+        }
+
+        function renderizarCarrito() {
+            const contenedorItems = document.getElementById('items-carrito');
+            const contenedorTotal = document.getElementById('precio-total');
+            const contador = document.getElementById('contador-carrito');
+
+            contenedorItems.innerHTML = '';
+            let total = 0, cantidadTotal = 0;
+
+            carrito.forEach(item => {
+                total += item.precio * item.cantidad;
+                cantidadTotal += item.cantidad;
+
+                // Protegemos el diseño por si alguna prenda vieja no tiene foto
+                const fotoAUsar = item.imagen || 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=600&auto=format&fit=crop';
+
+                // Magia para que los botones funcionen tanto en index como en productos
+                const parametrosDiv = item.nombre ? `${item.id}, '${item.nombre}'` : `${item.id}`;
+
+                const divItem = document.createElement('div');
+                divItem.className = 'item-carrito';
+                divItem.style.cssText = 'display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 15px;';
+
+                divItem.innerHTML = `
+                    <div style="display: flex; gap: 15px; align-items: center; max-width: 70%;">
+                        <img src="${fotoAUsar}" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px; border: 1px solid #333;">
+                        <div class="item-info">
+                            <p class="item-nombre" style="margin: 0 0 8px 0; font-size: 0.9rem; font-weight: 600; line-height: 1.2;">${item.nombre}</p>
+                            
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <button onclick="restarCantidad(${parametrosDiv})" style="background: transparent; color: #00e5ff; border: 1px solid #00e5ff; width: 28px; height: 28px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.1rem; transition: background 0.2s;" onmouseover="this.style.background='rgba(0, 229, 255, 0.1)'" onmouseout="this.style.background='transparent'">-</button>
+                                
+                                <span style="font-size: 1rem; font-weight: 800; width: 15px; text-align: center;">${item.cantidad}</span>
+                                
+                                <button onclick="sumarCantidad(${parametrosDiv})" style="background: transparent; color: #00e5ff; border: 1px solid #00e5ff; width: 28px; height: 28px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.1rem; transition: background 0.2s;" onmouseover="this.style.background='rgba(0, 229, 255, 0.1)'" onmouseout="this.style.background='transparent'">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-precio" style="display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; height: 70px;">
+                        
+                        <button class="btn-eliminar" onclick="eliminarDelCarrito(${parametrosDiv})" title="Eliminar todo" style="background: transparent; border: none; color: #ff4444; cursor: pointer; font-size: 1.2rem; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+
+                        <p style="margin: 0; color: #00e5ff; font-size: 1.1rem;"><b>$${(item.precio * item.cantidad).toLocaleString('es-AR')}</b></p>
+                    </div>
+                `;
+                contenedorItems.appendChild(divItem);
+            });
+
+            contenedorTotal.innerText = total.toLocaleString('es-AR');
+            contador.innerText = cantidadTotal > 0 ? `(${cantidadTotal})` : '';
+            if (cantidadTotal === 0) contenedorItems.innerHTML = '<p style="text-align:center; color:#999; margin-top:30px; margin-bottom: 20px;">Tu carrito está vacío.<br><span style="font-size: 0.8rem;">¡Sumá tu primera camiseta!</span></p>';
+        }
+
+        function irAlCheckout() {
+            if (carrito.length === 0) {
+                mostrarToastError("¡El carrito está vacío! Agregá una prenda.");
+                return;
+            }
+            window.location.href = 'checkout.html';
+        }
+
+        // --- EFECTOS DE LUPA Y MINIATURAS ---
+        let zoomActivo = false;
+        function cambiarFoto(elemento) {
+            document.getElementById('foto-principal').src = elemento.src;
+            document.querySelectorAll('.miniatura').forEach(min => { min.style.border = '2px solid transparent'; min.style.opacity = '0.6'; });
+            elemento.style.border = '2px solid #00245f'; elemento.style.opacity = '1';
+        }
+        function toggleZoom(e) {
+            zoomActivo = !zoomActivo;
+            const img = document.getElementById('foto-principal');
+            if (zoomActivo) {
+                document.getElementById('contenedor-zoom').style.cursor = 'zoom-out';
+                img.style.transform = 'scale(2.2)';
+                moverSiZoom(e);
+            } else quitarZoom();
+        }
+        function moverSiZoom(e) {
+            if (!zoomActivo) return;
+            const c = document.getElementById('contenedor-zoom');
+            const rect = c.getBoundingClientRect();
+            document.getElementById('foto-principal').style.transformOrigin = `${((e.clientX - rect.left) / rect.width) * 100}% ${((e.clientY - rect.top) / rect.height) * 100}%`;
+        }
+        function quitarZoom() {
+            zoomActivo = false;
+            document.getElementById('contenedor-zoom').style.cursor = 'zoom-in';
+            const img = document.getElementById('foto-principal');
+            img.style.transformOrigin = 'center center';
+            img.style.transform = 'scale(1)';
+        }
+
+        // --- CALCULADORA ---
+        function abrirCalculadora() { document.getElementById('modal-calculadora').classList.add('mostrar-modal'); }
+        function cerrarCalculadora() {
+            document.getElementById('modal-calculadora').classList.remove('mostrar-modal');
+            document.getElementById('resultado-talle').style.display = 'none';
+        }
+        function calcularTalle() {
+            const h = document.getElementById('input-altura').value, p = document.getElementById('input-peso').value;
+            if (!h || !p) return alert("Por favor, completá tu altura y tu peso.");
+
+            let ajustado = 'M', holgado = 'L';
+            if (h < 168 && p < 65) { ajustado = 'S'; holgado = 'M'; }
+            else if (h <= 178 && p <= 78) { ajustado = 'M'; holgado = 'L'; }
+            else if (h <= 186 && p <= 88) { ajustado = 'L'; holgado = 'XL'; }
+            else if (h <= 194 && p <= 98) { ajustado = 'XL'; holgado = 'XXL'; }
+            else { ajustado = 'XXL'; holgado = 'XXL'; }
+
+            document.getElementById('resultado-talle').style.display = 'block';
+            document.getElementById('talle-ajustado').innerText = '-'; document.getElementById('talle-holgado').innerText = '-';
+            setTimeout(() => {
+                document.getElementById('talle-ajustado').innerText = ajustado;
+                document.getElementById('talle-holgado').innerText = holgado;
+            }, 600);
+        }
+
+        // ==========================================
+        // 🚨 TOAST DE ERROR ELEGANTE (Conecta con tu CSS)
+        // ==========================================
+        function mostrarToastError(mensaje) {
+            // 1. Si ya hay un cartelito en pantalla, lo borramos para que no se amontonen
+            let toastViejo = document.getElementById('toast-error-baliant');
+            if (toastViejo) toastViejo.remove();
+
+            // 2. Fabricamos el Div y le ponemos tu clase de CSS
+            const toast = document.createElement('div');
+            toast.id = 'toast-error-baliant';
+            toast.className = 'toast-baliant'; // 🔥 ACÁ ES DONDE ENGANCHA TU CSS
+
+            // 3. Le inyectamos el ícono rojo y el texto
+            toast.innerHTML = `
+        <i class="fa-solid fa-circle-exclamation" style="font-size: 1.2rem;"></i> 
+        <span>${mensaje}</span>
+    `;
+
+            // 4. Lo pegamos en el cuerpo de la página (arranca invisible por tu CSS)
+            document.body.appendChild(toast);
+
+            // 5. Le damos 10 milisegundos y le agregamos la clase "mostrar" para que salte
+            setTimeout(() => {
+                toast.classList.add('mostrar');
+            }, 10);
+
+            // 6. Después de 3 segundos, le sacamos la clase para que baje, y luego lo borramos
+            setTimeout(() => {
+                toast.classList.remove('mostrar');
+                setTimeout(() => toast.remove(), 400); // Espera a que termine tu transition de 0.4s
+            }, 3000);
+        }
+
+        // ==========================================
+        // ⚡ FOGONAZO NEÓN AL AGREGAR AL CARRITO
+        // ==========================================
+        function activarDestelloNeon() {
+            // 1. Buscamos si el marco ya existe. Si no, lo fabricamos en el momento.
+            let marcoNeon = document.getElementById('efecto-neon-pantalla');
+            if (!marcoNeon) {
+                marcoNeon = document.createElement('div');
+                marcoNeon.id = 'efecto-neon-pantalla';
+                // Lo clavamos fijo a la pantalla, por encima de todo, sin que bloquee clics (pointer-events: none)
+                marcoNeon.style.cssText = "position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; box-shadow: inset 0 0 0px transparent; transition: box-shadow 0.3s ease-out, opacity 0.3s; opacity: 0;";
+                document.body.appendChild(marcoNeon);
+            }
+
+            // 2. Lo encendemos de golpe
+            setTimeout(() => {
+                marcoNeon.style.opacity = "1";
+                // Doble sombra interna para que parezca un tubo de luz real
+                marcoNeon.style.boxShadow = "inset 0 0 40px 10px rgba(0, 229, 255, 0.6), inset 0 0 15px 3px rgba(0, 229, 255, 0.9)";
+            }, 10);
+
+            // 3. Lo apagamos suavemente después de 800 milisegundos
+            setTimeout(() => {
+                marcoNeon.style.boxShadow = "inset 0 0 0px transparent";
+                marcoNeon.style.opacity = "0";
+            }, 1600);
+        }
+
+        cargarDetalle();
+        renderizarCarrito();
+    </script>
+</body>
+
+</html>
