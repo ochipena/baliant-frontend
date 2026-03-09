@@ -1190,8 +1190,39 @@ html {
         width: 100% !important;
     }
 
+    /* Obligamos al cuerpo a centrar su contenido (la tarjeta) */
     .checkout-body {
-        padding-top: 78px !important;
+        display: flex;
+        justify-content: center; /* Centrado horizontal */
+        align-items: center;     /* Centrado vertical (opcional, si querés que flote en el medio) */
+        min-height: 100vh;       /* Toma todo el alto de la pantalla */
+        padding: 20px 0;         /* Espaciado arriba y abajo para que no pegue en los bordes */
+        margin: 0;
+        /* Asegurate de tener el fondo oscuro puesto acá si no se ve mal */
+        background-color: #050505; 
+    }
+
+    /* Ajustamos el contenedor principal (la tarjeta) */
+    .checkout-container {
+        justify-content: center; /* Centrado horizontal */
+        width: 85%;              /* Toma casi todo el ancho, dejando márgenes finos a los lados */
+        margin-top: 30px !important;
+        margin: auto;            /* Asegura el centrado definitivo */
+        /* Mantenemos los estilos visuales existentes */
+        background: #000000;  
+        border-radius: 12px;
+        padding: 20px;
+        /* Aseguramos que el contenido INTERIOR esté alineado a la izquierda */
+        text-align: left !important; 
+    }
+
+    /* Forzamos a que label e input sigan a la izquierda por seguridad */
+    .input-group, 
+    .input-group label, 
+    .input-group input, 
+    .input-group select {
+        text-align: left !important; 
+        align-items: flex-start !important;
     }
 
     /* EL LOGO: AHORA SÍ, GIGANTE Y PROTAGONISTA */
