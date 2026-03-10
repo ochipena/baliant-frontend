@@ -223,8 +223,6 @@ btnPagarMP.addEventListener('click', async (evento) => {
         const datos = await respuesta.json();
 
         if (datos.linkPago) {
-            // Borramos el carrito de la memoria porque ya está yendo a pagar
-            localStorage.removeItem('carritoBaliant'); 
             window.location.href = datos.linkPago; 
         } else {
             mostrarToastError("Error generando el link de pago.");
