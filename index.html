@@ -55,6 +55,38 @@
         .btn-cerrar-modal:hover {
             color: #00e5ff;
         }
+
+        /* --- ESTILOS DEL LOADER DE BALIANT --- */
+        .loader-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 250px;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            width: 100%;
+            grid-column: 1 / -1; /* Para que ocupe todo el ancho en el grid */
+        }
+
+        .spinner {
+            width: 45px;
+            height: 45px;
+            border: 4px solid #1a1a1a; /* Fondo oscuro del anillo */
+            border-top: 4px solid #00e5ff; /* Color celeste neón BALIANT */
+            border-radius: 50%;
+            animation: girar 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes girar {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .oculto {
+            display: none !important;
+        }
     </style>
 </head>
 
@@ -62,17 +94,14 @@
 
     <header style="background-color: #0B1D3A; border-bottom: 2px solid #00e5ff;">
 
-        <div
-            style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; width: 100%; box-sizing: border-box;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; width: 100%; box-sizing: border-box;">
 
             <div style="display: flex; align-items: center; justify-content: flex-start; width: 36%;">
-                <div class="logo-container pc-only" onclick="window.location.href='index.html'"
-                    style="cursor: pointer;">
+                <div class="logo-container pc-only" onclick="window.location.href='index.html'" style="cursor: pointer;">
                     <img src="Baliant.jpg" alt="BALIANT" class="logo-img" style="max-height: 66px; display: block;">
                 </div>
 
-                <div class="usuario-icono movil-only" onclick="abrirModalUsuario()"
-                    style="cursor: pointer; color: #fff; font-size: 1.4rem;" title="Mi Cuenta">
+                <div class="usuario-icono movil-only" onclick="abrirModalUsuario()" style="cursor: pointer; color: #fff; font-size: 1.4rem;" title="Mi Cuenta">
                     <i class="fa-solid fa-user"></i>
                 </div>
             </div>
@@ -90,15 +119,13 @@
             </div>
 
             <div style="display: flex; align-items: center; justify-content: flex-end; gap: 30px; width: 33%;">
-                <div class="carrito-icono" onclick="abrirCarrito()"
-                    style="cursor: pointer; color: #fff; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                <div class="carrito-icono" onclick="abrirCarrito()" style="cursor: pointer; color: #fff; font-weight: 600; display: flex; align-items: center; gap: 8px;">
                     <i class="fa-solid fa-cart-shopping" style="font-size: 1.5rem;" ;></i>
                     <span class="texto-carrito pc-only" style="font-size: 1.1rem;">Carrito</span>
                     <span id="contador-carrito" style="font-size: 1.1rem;"></span>
                 </div>
 
-                <div class="usuario-icono pc-only" onclick="abrirModalUsuario()"
-                    style="cursor: pointer; color: #fff; font-size: 1.7rem;" title="Mi Cuenta">
+                <div class="usuario-icono pc-only" onclick="abrirModalUsuario()" style="cursor: pointer; color: #fff; font-size: 1.7rem;" title="Mi Cuenta">
                     <i class="fa-solid fa-user"></i>
                 </div>
             </div>
@@ -123,8 +150,7 @@
             <div class="hero-overlay"></div>
         </section>
         <div class="controles-tienda" id="catalogo">
-            <span class="resultados-texto" style="color: #aaa; font-weight: 600; font-size: 0.9rem;">Catálogo
-                Baliant</span>
+            <span class="resultados-texto" style="color: #aaa; font-weight: 600; font-size: 0.9rem;">Catálogo Baliant</span>
 
             <div class="buscador-container">
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -142,7 +168,13 @@
         </div>
         <div id="catalogo" style="padding-top: 180px; margin-top: -180px;">
             <div class="productos-grid" id="contenedor-productos">
-            </div>
+                
+                <div id="pantalla-carga" class="loader-container">
+                    <div class="spinner"></div>
+                    <p style="color: #00e5ff; font-weight: 800; font-size: 1rem; text-transform: uppercase; margin: 0;">Iniciando Sistema</p>
+                    <p style="color: #aaa; font-size: 0.85rem; margin-top: 5px;">Despertando al servidor y preparando el catálogo 🚀</p>
+                </div>
+                </div>
         </div>
     </main>
 
@@ -181,29 +213,20 @@
             <button class="btn-cerrar-modal" onclick="cerrarModalUsuario()">×</button>
 
             <div id="vista-login">
-                <h2
-                    style="color: #00e5ff; margin-top: 0; text-transform: uppercase; font-weight: 800; text-align: center;">
-                    Mi Cuenta</h2>
-                <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 25px; text-align: center;">Iniciá sesión para
-                    comprar más rápido.</p>
+                <h2 style="color: #00e5ff; margin-top: 0; text-transform: uppercase; font-weight: 800; text-align: center;">Mi Cuenta</h2>
+                <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 25px; text-align: center;">Iniciá sesión para comprar más rápido.</p>
 
-                <label
-                    style="display: block; color: #fff; font-size: 0.8rem; margin-bottom: 8px; font-weight: 600;">EMAIL</label>
-                <input type="email" id="login-email" placeholder="ejemplo@correo.com"
-                    style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Montserrat'; outline: none; margin-bottom: 15px; box-sizing: border-box;">
+                <label style="display: block; color: #fff; font-size: 0.8rem; margin-bottom: 8px; font-weight: 600;">EMAIL</label>
+                <input type="email" id="login-email" placeholder="ejemplo@correo.com" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Montserrat'; outline: none; margin-bottom: 15px; box-sizing: border-box;">
 
-                <label
-                    style="display: block; color: #fff; font-size: 0.8rem; margin-bottom: 8px; font-weight: 600;">CONTRASEÑA</label>
-                <input type="password" id="login-pass" placeholder="Tu contraseña"
-                    style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Montserrat'; outline: none; margin-bottom: 25px; box-sizing: border-box;">
+                <label style="display: block; color: #fff; font-size: 0.8rem; margin-bottom: 8px; font-weight: 600;">CONTRASEÑA</label>
+                <input type="password" id="login-pass" placeholder="Tu contraseña" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Montserrat'; outline: none; margin-bottom: 25px; box-sizing: border-box;">
 
-                <button onclick="iniciarSesion()"
-                    style="width: 100%; padding: 15px; background: #00e5ff; color: #000; font-weight: 800; border: none; border-radius: 6px; cursor: pointer; text-transform: uppercase; margin-bottom: 15px; transition: opacity 0.3s;">
+                <button onclick="iniciarSesion()" style="width: 100%; padding: 15px; background: #00e5ff; color: #000; font-weight: 800; border: none; border-radius: 6px; cursor: pointer; text-transform: uppercase; margin-bottom: 15px; transition: opacity 0.3s;">
                     Iniciar Sesión
                 </button>
 
-                <button onclick="cerrarModalUsuario()"
-                    style="width: 100%; padding: 15px; background: transparent; color: #fff; font-weight: 600; border: 1px solid #555; border-radius: 6px; cursor: pointer; text-transform: uppercase; transition: border-color 0.3s;">
+                <button onclick="cerrarModalUsuario()" style="width: 100%; padding: 15px; background: transparent; color: #fff; font-weight: 600; border: 1px solid #555; border-radius: 6px; cursor: pointer; text-transform: uppercase; transition: border-color 0.3s;">
                     Continuar sin cuenta
                 </button>
 
@@ -217,17 +240,13 @@
                 <h2 style="color: #fff; margin-top: 0; text-transform: uppercase;" id="texto-bienvenida">Hola</h2>
                 <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 25px;">Estás conectado a tu cuenta BALIANT.</p>
 
-                <button id="btn-ver-historial" onclick="cargarHistorial()"
-                    style="width: 100%; padding: 15px; background: #00e5ff; color: #000; font-weight: 800; border: none; border-radius: 6px; cursor: pointer; text-transform: uppercase; margin-bottom: 15px; transition: 0.3s;">
+                <button id="btn-ver-historial" onclick="cargarHistorial()" style="width: 100%; padding: 15px; background: #00e5ff; color: #000; font-weight: 800; border: none; border-radius: 6px; cursor: pointer; text-transform: uppercase; margin-bottom: 15px; transition: 0.3s;">
                     Ver historial y datos
                 </button>
 
-                <div id="contenedor-datos-perfil"
-                    style="display: none; text-align: left; margin-bottom: 15px; max-height: 280px; overflow-y: auto; padding-right: 5px;">
-                </div>
+                <div id="contenedor-datos-perfil" style="display: none; text-align: left; margin-bottom: 15px; max-height: 280px; overflow-y: auto; padding-right: 5px;"></div>
 
-                <button onclick="cerrarSesion()"
-                    style="width: 100%; padding: 15px; background: transparent; color: #ff4444; font-weight: 600; border: 1px solid #ff4444; border-radius: 6px; cursor: pointer; text-transform: uppercase;">
+                <button onclick="cerrarSesion()" style="width: 100%; padding: 15px; background: transparent; color: #ff4444; font-weight: 600; border: 1px solid #ff4444; border-radius: 6px; cursor: pointer; text-transform: uppercase;">
                     Cerrar Sesión
                 </button>
             </div>
@@ -245,9 +264,6 @@
     </div>
 
     <script>
-        // ==========================================
-        //  SISTEMA ORIGINAL Y CARRITO (sin cambios)
-        // ==========================================
         let carrito = JSON.parse(localStorage.getItem('carritoBaliant')) || [];
 
         function irAlCheckout() {
@@ -265,16 +281,27 @@
         let productosEnPantalla = [];
         let categoriaActual = 'todas';
 
+        // ==========================================
+        // 🔥 LÓGICA DEL LOADER INYECTADA AQUÍ
+        // ==========================================
         async function cargarCatalogo() {
             const contenedor = document.getElementById('contenedor-productos');
+            const loader = document.getElementById('pantalla-carga'); 
+
             try {
+                // El loader ya está visible por defecto en el HTML
                 const respuesta = await fetch('https://baliant-backend.onrender.com/productos');
                 catalogoCompleto = await respuesta.json();
                 productosEnPantalla = [...catalogoCompleto];
-                ordenarProductos();
+                
+                // Ocultamos el loader mágicamente cuando ya trajo los datos
+                if (loader) loader.classList.add('oculto'); 
+                
+                ordenarProductos(); // Esto dibuja las remeras
             } catch (error) {
                 console.error('Error:', error);
-                contenedor.innerHTML = '<p style="color:red; text-align:center;">Error al cargar el catálogo.</p>';
+                if (loader) loader.classList.add('oculto'); // Ocultamos el loader si falla
+                contenedor.innerHTML = '<p style="color:red; text-align:center; margin-top: 30px;">Error al cargar el catálogo de BALIANT. Recargá la página.</p>';
             }
         }
 
@@ -311,10 +338,19 @@
 
         function renderizarRopa(listaDeProductos) {
             const contenedor = document.getElementById('contenedor-productos');
-            contenedor.innerHTML = '';
+            
+            // Si el loader está oculto, solo limpiamos las tarjetas, no el HTML completo para no borrar el loader del código
+            Array.from(contenedor.children).forEach(hijo => {
+                if (hijo.id !== 'pantalla-carga') {
+                    hijo.remove();
+                }
+            });
 
             if (listaDeProductos.length === 0) {
-                contenedor.innerHTML = '<p style="color:#aaa; text-align:center; grid-column: 1 / -1;">Próximamente nuevos ingresos en esta categoría.</p>';
+                const mensajeVacio = document.createElement('p');
+                mensajeVacio.style.cssText = 'color:#aaa; text-align:center; grid-column: 1 / -1; margin-top: 30px;';
+                mensajeVacio.innerText = 'Próximamente nuevos ingresos en esta categoría.';
+                contenedor.appendChild(mensajeVacio);
                 return;
             }
 
@@ -366,7 +402,7 @@
             if (productoExistente) productoExistente.cantidad++;
             else carrito.push({ id, nombre, precio, cantidad: 1 });
             localStorage.setItem('carritoBaliant', JSON.stringify(carrito));
-            activarDestelloNeon(); // 🔥 ¡FOGONAZO ACÁ!
+            activarDestelloNeon(); 
             renderizarCarrito();
             abrirCarrito();
         }
@@ -374,12 +410,7 @@
         function abrirCarrito() { document.getElementById('carrito-lateral').classList.add('abierto'); renderizarCarrito(); }
         function cerrarCarrito() { document.getElementById('carrito-lateral').classList.remove('abierto'); }
 
-        // ==========================================
-        // 🛒 CONTROLES AVANZADOS DEL CARRITO (+ / - / Tachito)
-        // ==========================================
-
         function sumarCantidad(id, nombre = null) {
-            // Buscamos el producto exacto
             const producto = carrito.find(item => item.id === id && (nombre ? item.nombre === nombre : true));
             if (producto) {
                 producto.cantidad++;
@@ -389,13 +420,12 @@
         }
 
         function restarCantidad(id, nombre = null) {
-            // Buscamos su posición
             const indice = carrito.findIndex(item => item.id === id && (nombre ? item.nombre === nombre : true));
             if (indice !== -1) {
                 if (carrito[indice].cantidad > 1) {
                     carrito[indice].cantidad--;
                 } else {
-                    carrito.splice(indice, 1); // Si le da al menos y tiene 1, se borra
+                    carrito.splice(indice, 1);
                 }
                 localStorage.setItem('carritoBaliant', JSON.stringify(carrito));
                 renderizarCarrito();
@@ -403,7 +433,6 @@
         }
 
         function eliminarDelCarrito(id, nombre = null) {
-            // El tachito aniquila el producto de una, sin importar la cantidad
             carrito = carrito.filter(item => !(item.id === id && (nombre ? item.nombre === nombre : true)));
             localStorage.setItem('carritoBaliant', JSON.stringify(carrito));
             renderizarCarrito();
@@ -421,10 +450,7 @@
                 total += item.precio * item.cantidad;
                 cantidadTotal += item.cantidad;
 
-                // Protegemos el diseño por si alguna prenda vieja no tiene foto
                 const fotoAUsar = item.imagen || 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=600&auto=format&fit=crop';
-                
-                // Magia para que los botones funcionen tanto en index como en productos
                 const parametrosDiv = item.nombre ? `${item.id}, '${item.nombre}'` : `${item.id}`;
 
                 const divItem = document.createElement('div');
@@ -475,37 +501,26 @@
             setTimeout(() => { toast.classList.remove('mostrar'); setTimeout(() => toast.remove(), 400); }, 3000);
         }
 
-        // ==========================================
-        // ⚡ FOGONAZO NEÓN AL AGREGAR AL CARRITO
-        // ==========================================
         function activarDestelloNeon() {
-            // 1. Buscamos si el marco ya existe. Si no, lo fabricamos en el momento.
             let marcoNeon = document.getElementById('efecto-neon-pantalla');
             if (!marcoNeon) {
                 marcoNeon = document.createElement('div');
                 marcoNeon.id = 'efecto-neon-pantalla';
-                // Lo clavamos fijo a la pantalla, por encima de todo, sin que bloquee clics (pointer-events: none)
                 marcoNeon.style.cssText = "position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; box-shadow: inset 0 0 0px transparent; transition: box-shadow 0.3s ease-out, opacity 0.3s; opacity: 0;";
                 document.body.appendChild(marcoNeon);
             }
 
-            // 2. Lo encendemos de golpe
             setTimeout(() => {
                 marcoNeon.style.opacity = "1";
-                // Doble sombra interna para que parezca un tubo de luz real
                 marcoNeon.style.boxShadow = "inset 0 0 40px 10px rgba(0, 229, 255, 0.6), inset 0 0 15px 3px rgba(0, 229, 255, 0.9)";
             }, 10);
 
-            // 3. Lo apagamos suavemente después de 800 milisegundos
             setTimeout(() => {
                 marcoNeon.style.boxShadow = "inset 0 0 0px transparent";
                 marcoNeon.style.opacity = "0";
             }, 1600);
         }
 
-        // ==========================================
-        // 🔥 SISTEMA DE USUARIO (LOGIN / MODAL)
-        // ==========================================
         const IP_SERVIDOR = "https://baliant-backend.onrender.com";
 
         function abrirModalUsuario() {
@@ -527,8 +542,6 @@
 
         function cerrarModalUsuario() {
             document.getElementById('modal-usuario').classList.remove('mostrar-modal');
-
-            // 🔥 Agregamos esto para reiniciar la vista del historial cuando cierra el modal
             const btnHistorial = document.getElementById('btn-ver-historial');
             const contenedorDatos = document.getElementById('contenedor-datos-perfil');
             if (btnHistorial && contenedorDatos) {
@@ -616,9 +629,6 @@
             }
         }
 
-        // ==========================================
-        // 📦 CARGAR HISTORIAL DE COMPRAS
-        // ==========================================
         async function cargarHistorial() {
             const btn = document.getElementById('btn-ver-historial');
             const contenedor = document.getElementById('contenedor-datos-perfil');
@@ -657,15 +667,14 @@
                         datos.historial.forEach(compra => {
                             const fecha = new Date(compra.fecha_compra).toLocaleDateString('es-AR');
 
-                            // 🔥 EL NUEVO TRADUCTOR DE ESTADOS
-                            let estadoColor = '#ffc107'; // Amarillo por defecto
+                            let estadoColor = '#ffc107'; 
                             let estadoTexto = 'En proceso ⏳';
 
                             if (compra.estado === 'enviado') {
-                                estadoColor = '#00e5ff'; // Celeste neón de BALIANT
+                                estadoColor = '#00e5ff'; 
                                 estadoTexto = '¡DESPACHADO! 🚚';
                             } else if (compra.estado === 'approved') {
-                                estadoColor = '#25d366'; // Verde éxito
+                                estadoColor = '#25d366'; 
                                 estadoTexto = 'Pago Aprobado 📦';
                             }
 
