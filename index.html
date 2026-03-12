@@ -852,31 +852,49 @@
         }
 
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxGuXh-S4UmylHklPF9VoVG_4kLHy6lwqRDT9Dr49S8Xfq_-p1bYRdGeTTTRIbtI_twvg/exec';
-        document.getElementById('form-sugerencia').addEventListener('submit', function (e) {
-            // Evitamos que la página se recargue al tocar el botón
-            e.preventDefault();
+        const form = document.getElementById('form-sugerencia');
 
-            // Guardamos lo que el usuario escribió (por si lo querés usar después)
-            const sugerencia = document.getElementById('input-camiseta').value;
+    form.addEventListener('submit', e => {
+        e.preventDefault(); // Evita que la página recargue
+        
+        // Agarramos lo que el usuario escribió
+        const inputCamiseta = document.getElementById('input-camiseta').value;
+        
+        // Preparamos los datos para mandarlos al Excel
+        let formData = new FormData();
+        formData.append('sugerencia', inputCamiseta);
+        
+        // Cambiamos el botón para que el usuario sepa que está cargando
+        const btnSubmit = form.querySelector('button');
+        btnSubmit.innerText = 'ENVIANDO...';
+        btnSubmit.style.opacity = '0.7';
 
-            // Ocultamos el formulario con una transición rápida
-            this.style.opacity = '0';
-            setTimeout(() => {
-                this.style.display = 'none';
-
-                // Mostramos el mensaje de éxito
-                const mensajeExito = document.getElementById('mensaje-exito');
-                mensajeExito.style.display = 'block';
-
-                // Le damos un pequeño efecto de aparición
-                mensajeExito.style.opacity = '0';
+        // Hacemos el envío "invisible" a Google Sheets
+        fetch(scriptURL, { method: 'POST', body: formData })
+            .then(response => {
+                // Si salió bien, hacemos la animación de desaparecer el formulario
+                form.style.opacity = '0';
                 setTimeout(() => {
-                    mensajeExito.style.transition = 'opacity 0.5s ease';
-                    mensajeExito.style.opacity = '1';
-                }, 50);
-
-            }, 300); // Espera 300ms a que termine de desvanecerse
-        });
+                    form.style.display = 'none';
+                    
+                    // Mostramos tu mensaje de éxito neón
+                    const mensajeExito = document.getElementById('mensaje-exito');
+                    mensajeExito.style.display = 'block';
+                    mensajeExito.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        mensajeExito.style.transition = 'opacity 0.5s ease';
+                        mensajeExito.style.opacity = '1';
+                    }, 50);
+                }, 300);
+            })
+            .catch(error => {
+                // Si falla (ej. sin internet), le avisamos
+                console.error('Error!', error.message);
+                btnSubmit.innerText = 'ERROR, INTENTÁ DE NUEVO';
+                btnSubmit.style.opacity = '1';
+            });
+    });
 
         // INICIALIZACIÓN FINAL
         cargarCatalogo();
