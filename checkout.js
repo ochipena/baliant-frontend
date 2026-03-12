@@ -58,7 +58,7 @@ function aplicarCupon() {
 
     // 🏆 ACÁ DEFINÍS TUS CUPONES (Código : Porcentaje de descuento)
     const cuponesValidos = {
-        "LANZAMIENTO": 15,    // 15% OFF
+        "LANZAMIENTO": 10,    // 10% OFF
         "BALIANT2026": 20,    // 20% OFF
         "VIP": 30             // 30% OFF
     };
